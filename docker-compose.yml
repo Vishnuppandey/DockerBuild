@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  mysqldb:
+    image: mysql
+    container_name: mysqldb
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: docker
+      MYSQL_USER: vishnu
+      MYSQL_PASSWORD: 1234
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  userservice:
+    image: vishnu809/userservice/dockerex
+    container_name: userservice
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysqldb
+
+volumes:
+  mysql-data:
